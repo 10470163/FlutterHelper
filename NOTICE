@@ -1,0 +1,48 @@
+FlutterHelper
+=============
+
+Copyright (C) 2026 SixSix and contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (see the LICENSE file). If not, see
+<https://www.gnu.org/licenses/>.
+
+SPDX-License-Identifier: GPL-3.0-or-later
+
+
+Third-party / adapted works
+---------------------------
+
+Substantial portions of the editor features in this project are adapted
+from Flutter Enhancement Suite, which is licensed under the GNU GPL v3.0:
+
+  Project:  Flutter Enhancement Suite
+  Author:   Marius Höfler
+  Source:   https://github.com/marius-h/flutter_enhancement_suite
+  License:  GNU General Public License v3.0
+            https://github.com/marius-h/flutter_enhancement_suite/blob/main/LICENSE
+
+Because this project is a derivative work of GPL-3.0-licensed software,
+FlutterHelper is released under the GNU GPL v3.0 (or later) as well.
+Relicensing the combined work under a non-copyleft license (for example
+MIT or Apache-2.0) would not be permitted without removing all adapted
+code and obtaining permission from the original copyright holders.
+
+Adapted areas include (non-exhaustive): parameter/type inlay hints,
+Code Vision providers, breadcrumbs, new Flutter widget / template
+flows, extract widget, pubspec → pub.dev package references, and related
+utilities.
+
+Other dependencies (Dart / Flutter / YAML IDE plugins, JetBrains
+Platform APIs, etc.) remain under their respective licenses and are not
+relicensed by this NOTICE.

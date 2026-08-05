@@ -1,0 +1,25 @@
+name: flutter_helper_screenshot_demo
+description: FlutterHelper plugin feature demo
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Demo: Goto Declaration on package name → pub.dev (Ctrl+B / ⌘B)
+  # 演示：包名上 Goto Declaration → pub.dev（Ctrl+B / ⌘B）
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  http: ^1.2.2
+  shared_preferences: ^2.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

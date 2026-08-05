@@ -1,0 +1,173 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.sixsix.flutter.helper.FlutterHelper</id>
+    <name>FlutterHelper</name>
+    <vendor url="https://github.com/10470163/FlutterHelper">SixSix</vendor>
+
+    <description><![CDATA[
+        <h2>FlutterHelper</h2>
+        <p>Flutter/Dart editor enhancements for <b>IntelliJ IDEA / Android Studio</b>.</p>
+        <p>面向 <b>IntelliJ IDEA / Android Studio</b> 的 Flutter/Dart 编辑增强插件。</p>
+        <p>Requires: <b>Dart</b>, <b>Flutter</b>.</p>
+        <p>依赖：<b>Dart</b>、<b>Flutter</b>。</p>
+
+        <h3>Features / 功能</h3>
+        <ul>
+          <li>
+            <p>
+              <b>Parameter / type inlay hints</b> — positional args, locals, lambda parameters<br/>
+              <b>参数名 / 类型内联提示</b> — 位置参数、局部变量、lambda 形参
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>Code Vision / breadcrumbs</b> — references, implementations, hierarchy<br/>
+              <b>Code Vision / 面包屑</b> — 引用、实现、层级导航
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>New Flutter Widget</b> — Stateless / Stateful / Animated / Inherited<br/>
+              <b>新建 Flutter 组件</b> — 无状态 / 有状态 / 动画 / 继承
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>Extract Widget</b> — current or new file (Ctrl+Alt+E / ⌘⌥E)<br/>
+              <b>提取 Widget</b> — 当前或新文件（Ctrl+Alt+E / ⌘⌥E）
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>Reformat pre-steps</b> — import style, quotes, trailing commas (skip setState)<br/>
+              <b>格式化预操作</b> — import 风格、引号、尾随逗号（忽略 setState）
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>pub.dev jump</b> — Goto Declaration on pubspec package names (Ctrl+B / ⌘B)<br/>
+              <b>打开 pub.dev</b> — pubspec 包名上 Goto Declaration（Ctrl+B / ⌘B）
+            </p>
+          </li>
+        </ul>
+
+        <h3>Type &amp; parameter hints / 类型与参数提示</h3>
+        <p>Settings → Editor → Inlay Hints → enable Parameter names and <b>Dart type hints</b>. Wait for Analysis Server.</p>
+        <p>设置 → 编辑器 → 内联提示 → 开启参数名与 <b>Dart 类型提示</b>。请等待 Analysis Server。</p>
+        <img src="https://cdn.jsdelivr.net/gh/10470163/FlutterHelper@master/docs/screenshots/type-hints.jpg"
+             alt="Type and parameter hints / 类型与参数提示"
+             width="640"/>
+
+        <h3>New Flutter Widget / 新建 Flutter 组件</h3>
+        <p>Right-click → New → <b>Flutter Widget</b>: Stateless, Stateful, with AnimationController, Inherited. Name <code>MyCard</code> → <code>my_card.dart</code>.</p>
+        <p>右键 → 新建 → <b>Flutter 组件</b>：无状态、有状态、带动画控制器、继承。名称 <code>MyCard</code> → <code>my_card.dart</code>。</p>
+        <img src="https://cdn.jsdelivr.net/gh/10470163/FlutterHelper@master/docs/screenshots/new-widget-menu.jpg"
+             alt="New Flutter Widget / 新建 Flutter 组件"
+             width="640"/>
+
+        <h3>Code style (reformat only) / 代码风格（仅格式化）</h3>
+        <p>Settings → Tools → <b>FlutterHelper</b>: rewrite imports (Package / Relative, no <code>./</code>), double→single quotes (keep raw <code>r</code>), trailing commas (skip <code>setState</code>). Save alone does not rewrite.</p>
+        <p>设置 → 工具 → <b>FlutterHelper</b>：重写 import（Package / 相对路径，不写 <code>./</code>）、双引号→单引号（保留 raw <code>r</code>）、尾随逗号（忽略 <code>setState</code>）。纯保存不改写。</p>
+        <img src="https://cdn.jsdelivr.net/gh/10470163/FlutterHelper@master/docs/screenshots/settings-format.jpg"
+             alt="Format settings / 格式化设置"
+             width="640"/>
+
+        <h3>Open on pub.dev / 打开 pub.dev</h3>
+        <p>In <code>pubspec.yaml</code>, caret on a versioned package name → <b>Ctrl+B</b> / ⌘B → <code>https://pub.dev/packages/&lt;name&gt;</code>.</p>
+        <p>在 <code>pubspec.yaml</code> 带版本号的依赖包名上按 <b>Ctrl+B</b> / ⌘B → <code>https://pub.dev/packages/&lt;包名&gt;</code>。</p>
+        <img src="https://cdn.jsdelivr.net/gh/10470163/FlutterHelper@master/docs/screenshots/pubspec-pubdev.jpg"
+             alt="pubspec to pub.dev"
+             width="640"/>
+
+        <h3>Extract Widget / 提取 Widget</h3>
+        <p>Select a Widget expression → <b>Ctrl+Alt+E</b> / ⌘⌥E → current or new file (import / part of).</p>
+        <p>选中 Widget 表达式 → <b>Ctrl+Alt+E</b> / ⌘⌥E → 当前或新文件（import / part of）。</p>
+        <img src="https://cdn.jsdelivr.net/gh/10470163/FlutterHelper@master/docs/screenshots/extract-widget.jpg"
+             alt="Extract Widget / 提取 Widget"
+             width="640"/>
+
+        <p>
+          Docs: <a href="https://github.com/10470163/FlutterHelper#readme">README</a> ·
+          Demo: <a href="https://github.com/10470163/FlutterHelper/tree/master/examples/screenshot_demo">screenshot_demo</a><br/>
+          文档：<a href="https://github.com/10470163/FlutterHelper#readme">README</a> ·
+          演示：<a href="https://github.com/10470163/FlutterHelper/tree/master/examples/screenshot_demo">screenshot_demo</a><br/>
+          License / 许可证：<b>GNU GPL v3.0 or later</b> (LICENSE / NOTICE).<br/>
+          Adapted from / 改编自
+          <a href="https://github.com/marius-h/flutter_enhancement_suite">Flutter Enhancement Suite</a>
+          (Marius Höfler, GPL-3.0).<br/>
+          Thanks / 致谢：Marius Höfler and Flutter Enhancement Suite for the original work.<br/>
+          感谢 Marius Höfler 与 Flutter Enhancement Suite 项目的原创贡献。
+        </p>
+        ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>Dart</depends>
+    <depends>io.flutter</depends>
+
+    <resource-bundle>messages.FlutterHelperBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.sixsix.flutter.helper.settings.FlutterHelperConfigurable"
+                id="com.sixsix.flutter.helper.settings.FlutterHelperConfigurable"
+                displayName="FlutterHelper"/>
+
+        <breadcrumbsInfoProvider
+                implementation="com.sixsix.flutter.helper.editor.DartBreadcrumbsInfoProvider"/>
+
+        <codeInsight.parameterNameHints
+                implementationClass="com.sixsix.flutter.helper.codeInsight.hints.DartInlayParameterHintsProvider"
+                language="Dart"/>
+
+        <codeInsight.inlayProvider
+                implementationClass="com.sixsix.flutter.helper.codeInsight.hints.types.DartTypeInlayHintsProvider"
+                language="Dart"
+                isEnabledByDefault="true"/>
+
+        <codeInsight.daemonBoundCodeVisionProvider
+                implementation="com.sixsix.flutter.helper.codeInsight.codevision.DartReferencesCodeVisionProvider"/>
+        <codeInsight.daemonBoundCodeVisionProvider
+                implementation="com.sixsix.flutter.helper.codeInsight.codevision.DartInheritorsCodeVisionProvider"/>
+        <vcs.codeVisionLanguageContext
+                language="Dart"
+                implementationClass="com.sixsix.flutter.helper.codeInsight.codevision.DartVcsCodeVisionContext"/>
+
+        <internalFileTemplate name="stateless_widget"/>
+        <internalFileTemplate name="stateful_widget"/>
+        <internalFileTemplate name="animated_widget"/>
+        <internalFileTemplate name="inherited_widget"/>
+
+        <preFormatProcessor
+                implementation="com.sixsix.flutter.helper.format.DartCodeStylePreFormatProcessor"/>
+
+        <psi.referenceContributor language="yaml"
+                                  implementation="com.sixsix.flutter.helper.editor.PackageReferenceContributor"/>
+
+        <postStartupActivity
+                implementation="com.sixsix.flutter.helper.codeInsight.hints.types.DartTypeHintsRefreshStartupActivity"/>
+    </extensions>
+
+    <actions>
+        <group id="FlutterHelper.NewWidgetGroup" popup="true">
+            <add-to-group group-id="NewGroup"
+                          anchor="before"
+                          relative-to-action="NewFromTemplate"/>
+            <action id="FlutterHelper.NewStatelessWidget"
+                    class="com.sixsix.flutter.helper.actions.NewStatelessWidgetAction"/>
+            <action id="FlutterHelper.NewStatefulWidget"
+                    class="com.sixsix.flutter.helper.actions.NewStatefulWidgetAction"/>
+            <action id="FlutterHelper.NewAnimatedWidget"
+                    class="com.sixsix.flutter.helper.actions.NewAnimatedWidgetAction"/>
+            <action id="FlutterHelper.NewInheritedWidget"
+                    class="com.sixsix.flutter.helper.actions.NewInheritedWidgetAction"/>
+        </group>
+        <action id="FlutterHelper.ExtractWidgetToFile"
+                class="com.sixsix.flutter.helper.refactoring.ExtractWidgetToFileAction">
+            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt E"/>
+        </action>
+    </actions>
+</idea-plugin>

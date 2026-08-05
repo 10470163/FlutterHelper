@@ -1,0 +1,66 @@
+# --- OS ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- IDE / editor ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.fleet/
+.project
+.classpath
+.settings/
+
+# --- Gradle / IntelliJ Platform plugin build ---
+.gradle/
+build/
+out/
+.kotlin/
+.intellijPlatform/
+*.hprof
+captures/
+
+# --- Logs / temp ---
+*.log
+*.tmp
+*.bak
+*.orig
+
+# --- Flutter demo (examples/) ---
+examples/**/.dart_tool/
+examples/**/.packages
+examples/**/.pub-cache/
+examples/**/.pub/
+examples/**/build/
+examples/**/.flutter-plugins
+examples/**/.flutter-plugins-dependencies
+examples/**/local.properties
+examples/**/**/local.properties
+examples/**/SCREENSHOT_TIPS.local.md
+examples/**/.idea/
+examples/**/*.iml
+examples/**/android/.gradle/
+examples/**/android/app/debug/
+examples/**/android/app/profile/
+examples/**/android/app/release/
+examples/**/ios/Pods/
+examples/**/ios/.symlinks/
+examples/**/ios/Flutter/Flutter.framework
+examples/**/ios/Flutter/Flutter.podspec
+examples/**/ios/Flutter/Generated.xcconfig
+examples/**/ios/Flutter/ephemeral/
+examples/**/macos/Flutter/ephemeral/
+examples/**/linux/flutter/ephemeral/
+examples/**/windows/flutter/ephemeral/
+
+# --- Secrets / local env ---
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+key.properties
