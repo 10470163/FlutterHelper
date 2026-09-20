@@ -2,6 +2,13 @@
 
 # FlutterHelper Changelog
 
+## [1.0.1] — 2026-09-20
+
+### Fixed / 修复
+
+- **Parameter hints crash** — avoid `DartNewExpression.getReferenceExpressionList()`, which is missing in some Dart plugin builds (`NoSuchMethodError`). Resolve constructor references via PSI children instead.  
+  **参数名提示崩溃** — 不再调用部分 Dart 插件版本已移除的 `getReferenceExpressionList()`，改为通过 PSI 子节点解析构造引用。
+
 ## [1.0.0] — Initial release / 首个正式版本
 
 First public release of FlutterHelper for IntelliJ IDEA / Android Studio.  

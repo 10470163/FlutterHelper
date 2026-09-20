@@ -5,8 +5,8 @@
 [![Rating](https://img.shields.io/jetbrains/plugin/r/rating/33267-flutterhelper.svg)](https://plugins.jetbrains.com/plugin/33267-flutterhelper)
 [![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
 
-**Version 1.0.0** — initial release.  
-**版本 1.0.0** — 首个正式版本。
+**Version 1.0.1** — bugfix.  
+**版本 1.0.1** — 缺陷修复。
 
 Flutter/Dart editor enhancements for **IntelliJ IDEA / Android Studio**.  
 面向 **IntelliJ IDEA / Android Studio** 的 Flutter/Dart 编辑增强插件。

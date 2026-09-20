@@ -6,7 +6,6 @@ import com.intellij.codeInsight.hints.InlayParameterHintsProvider
 import com.intellij.lang.Language
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.childrenOfType
-import com.intellij.util.containers.ContainerUtil
 import com.jetbrains.lang.dart.DartLanguage
 import com.jetbrains.lang.dart.ide.info.DartFunctionDescription
 import com.jetbrains.lang.dart.psi.DartArguments
@@ -15,6 +14,7 @@ import com.jetbrains.lang.dart.psi.DartComponent
 import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartNamedArgument
 import com.jetbrains.lang.dart.psi.DartNewExpression
+import com.jetbrains.lang.dart.psi.DartReferenceExpression
 import com.jetbrains.lang.dart.util.DartResolveUtil
 
 /**
@@ -78,10 +78,8 @@ class DartInlayParameterHintsProvider : InlayParameterHintsProvider {
         is DartNewExpression -> {
             val type = element.type
             val classResolveResult = DartResolveUtil.resolveClassByType(type)
-            val referenceExpressions = element.referenceExpressionList
-            val psiElement =
-                if (referenceExpressions.isEmpty() && type != null) type.referenceExpression
-                else ContainerUtil.getLastItem(referenceExpressions)
+            val referenceExpressions = element.childrenOfType<DartReferenceExpression>()
+            val psiElement = referenceExpressions.lastOrNull() ?: type?.referenceExpression
             val target = psiElement?.resolve()
             if (target is DartComponentName) {
                 val component = target.parent as? DartComponent ?: return null
