@@ -2,6 +2,13 @@
 
 # FlutterHelper Changelog
 
+## [1.0.2] — 2026-09-20
+
+### Fixed / 修复
+
+- **Type hints × Dart 509+** — stop calling removed `DartAnalysisServerService.analysis_getHover` (Plugin Verifier `NoSuchMethodError` on IDEA 2025.3+). Resolve hover via reflective DAS method when present, otherwise `AnalysisServer.analysis_getHover`.  
+  **类型提示 × Dart 509+** — 不再直接调用已移除的 `analysis_getHover`（Marketplace 兼容性检查失败）。优先反射调用旧 API，否则走 AnalysisServer 协议接口。
+
 ## [1.0.1] — 2026-09-20
 
 ### Fixed / 修复

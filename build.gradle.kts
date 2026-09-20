@@ -22,7 +22,7 @@ dependencies {
 
         // Marketplace plugins required for Dart PSI / Flutter refactoring APIs
         // Marketplace 插件：Dart PSI / Flutter 重构 API
-        plugin("Dart", "507.0.0")
+        plugin("Dart", "509.0.0")
         plugin("io.flutter", "94.0.0")
 
         // pubspec.yaml → pub.dev jump needs YAML PSI

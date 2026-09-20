@@ -13,10 +13,12 @@ import com.jetbrains.lang.dart.psi.DartVarAccessDeclaration
 import java.util.concurrent.ConcurrentHashMap
 
 /**
+ * Caches identifier offset → inferred type per file.
  * 按文件缓存标识符偏移 → 推断类型。
  *
- * collect 阶段只读缓存，避免在 Daemon 线程里同步连打 [DartAnalysisServerService.analysis_getHover]
- *（易超时，表现为 `bar`/`n`/`context`/`child` 随机空缺）。
+ * Collect reads cache only; hover runs asynchronously via [DartAnalysisHoverCompat]
+ * (never calls removed DAS.analysis_getHover directly — Dart 509+ / Plugin Verifier).
+ * collect 只读缓存；hover 经兼容层异步填充（不直接调用已移除的 DAS.analysis_getHover）。
  */
 @Service(Service.Level.PROJECT)
 class DartTypeHintsCache(private val project: Project) {
@@ -122,7 +124,7 @@ class DartTypeHintsCache(private val project: Project) {
 
             for (offset in offsets) {
                 val hover = try {
-                    das.analysis_getHover(virtualFile, offset).firstOrNull()
+                    DartAnalysisHoverCompat.getHovers(das, virtualFile, offset).firstOrNull()
                 } catch (_: Exception) {
                     null
                 } ?: continue
