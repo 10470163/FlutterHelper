@@ -23,18 +23,15 @@ import java.util.concurrent.atomic.AtomicInteger
  * Code Vision hint showing usage counts for Dart declarations (e.g. `3 usages`).
  * Dart 声明的引用次数 Code Vision（如 `3 usages`）。
  *
- * Counts project usages via [DartServerFindUsagesHandler] and separates test-directory hits.
- * 通过 [DartServerFindUsagesHandler] 统计项目内引用，并区分测试目录中的次数。
- * Click opens Find Usages.
- * 点击后跳转到查找用法界面。
+ * Cached + gated: at most one heavy Find Usages at a time across Code Vision providers.
+ * 带缓存与闸门：全插件同时最多一个昂贵的 Find Usages。
  *
  * Adapted from Flutter Enhancement Suite (GPL-3.0).
- * 改编自 Flutter Enhancement Suite（GPL-3.0）。
  */
 class DartReferencesCodeVisionProvider : ReferencesCodeVisionProvider() {
     companion object {
         const val ID = "flutter.helper.dart.references"
-        private const val MAX_USAGES = 100
+        private const val MAX_USAGES = 40
     }
 
     override val id: String
@@ -45,6 +42,32 @@ class DartReferencesCodeVisionProvider : ReferencesCodeVisionProvider() {
     override fun acceptsElement(element: PsiElement): Boolean = element.enablesCodeVision()
 
     override fun getHint(element: PsiElement, file: PsiFile): String? {
+        if (com.intellij.ide.PowerSaveMode.isEnabled() ||
+            com.intellij.openapi.project.DumbService.isDumb(element.project)
+        ) {
+            return null
+        }
+        val cache = DartCodeVisionHintCache.getInstance(element.project)
+        when (val hit = cache.getIfPresent("refs", element)) {
+            is DartCodeVisionHintCache.EntryLookup.Present -> {
+                com.sixsix.flutter.helper.perf.FlutterHelperPerfLog.codeVisionCacheHit("refs")
+                return hit.hint
+            }
+            DartCodeVisionHintCache.EntryLookup.Absent -> Unit
+        }
+        return DartCodeVisionGate.tryRun {
+            val start = System.nanoTime()
+            val hint = computeHint(element)
+            com.sixsix.flutter.helper.perf.FlutterHelperPerfLog.codeVisionComputed(
+                "refs",
+                (System.nanoTime() - start) / 1_000_000L,
+            )
+            cache.put("refs", element, hint)
+            hint
+        }
+    }
+
+    private fun computeHint(element: PsiElement): String? {
         val el = if (element is DartVarDeclarationList) element.varAccessDeclaration else element as? DartComponent
             ?: return null
         val referencedElement = el.componentName ?: return null

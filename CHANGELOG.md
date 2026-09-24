@@ -2,6 +2,36 @@
 
 # FlutterHelper Changelog
 
+## [1.0.6] — 2026-09-24
+
+### Changed / 变更
+
+- **No performance toggles** — best-effort path is always on (viewport-first type hints; no highlight-storm refresh; shared DAS single-flight).  
+  **无性能开关** — 始终走最佳路径（可见区类型提示；不跟 highlights 风暴；DAS 单飞）。
+- **Perf logging** — enable `#com.sixsix.flutter.helper.perf.FlutterHelperPerfLog` in Debug Log Settings; operations ≥200ms always log `FlutterHelperPerf | SLOW ...` to `idea.log`. See [docs/PERF_DIAGNOSIS.md](docs/PERF_DIAGNOSIS.md).  
+  **性能日志** — Debug Log Settings 加入上述类别；≥200ms 打出 `SLOW`；排查说明见文档。
+
+## [1.0.5] — 2026-09-24
+
+### Fixed / 修复
+
+- **Slow Dart analyzes / many warnings** — do not refresh type hints on every analysis highlight; shared DAS single-flight with Code Vision; hover spacing + tighter budgets; `ensureCached` debounced.  
+  **分析慢 / 警告多** — 不再因每次 highlights 刷类型提示；与 Code Vision 共用 DAS 单飞；hover 限流。
+
+## [1.0.4] — 2026-09-24
+
+### Fixed / 修复
+
+- **More editor lag reductions** — PSI walk limited to viewport subtree; skip fill when viewport already satisfied; coalesce worker jobs; hover 80ms / ≤16 targets / 200ms budget; highlight debounce 1.2s; Power Save / Dumb mode skips heavy work; parameter hints skip all-named calls; Code Vision respects Power Save.  
+  **进一步降低卡顿** — PSI 只扫可见子树；可见区已满足则跳过；任务去重；更紧预算；省电/Dumb 模式跳过重活；参数提示跳过全命名调用。
+
+## [1.0.3] — 2026-09-24
+
+### Fixed / 修复
+
+- **Editor / system lag** — type hints are **viewport-first** (visible range + buffer; scroll fills more); hover outside ReadAction (150ms); ≤24 targets / 320ms per fill; single-thread worker; highlight debounce 900ms; daemon restart only on cache change; Code Vision cached + single-flight gate; usage scan cap 40.  
+  **编辑器 / 整机卡顿** — 类型提示**可见区优先**（可见范围+缓冲，滚动再补算）；hover 不占读锁；单次填充限额；单线程队列；Code Vision 缓存+串行闸门。
+
 ## [1.0.2] — 2026-09-20
 
 ### Fixed / 修复

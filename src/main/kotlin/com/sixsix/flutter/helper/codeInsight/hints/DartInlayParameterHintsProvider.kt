@@ -47,12 +47,15 @@ class DartInlayParameterHintsProvider : InlayParameterHintsProvider {
         } ?: return emptyList()
 
         val expressionList = arguments.argumentList?.expressionList ?: return emptyList()
+        // Fast path: only named args → nothing to show.
+        // 快路径：全是命名参数则无需提示。
+        if (expressionList.none { it !is DartNamedArgument }) return emptyList()
+
         val functionDescription = getFunctionDescription(element)
         val parameterNames = functionDescription?.parameters?.map { it.text } ?: return emptyList()
 
         var positionalIndex = 0
         return expressionList.mapNotNull { expression ->
-            // 仅跳过真正的命名实参；不要用 text.contains(":")（会误伤三元表达式等）
             if (expression is DartNamedArgument) {
                 return@mapNotNull null
             }
@@ -90,13 +93,19 @@ class DartInlayParameterHintsProvider : InlayParameterHintsProvider {
     }
 
     private fun String.parameterName(): String {
-        if (split("(").size == 1) {
-            return replace(Regex("[^a-zA-Z0-9_]"), " ").trim().split(Regex("\\s+")).lastOrNull() ?: this
+        if (!contains('(')) {
+            return NON_IDENT.replace(this, " ").trim().split(WHITESPACE).lastOrNull() ?: this
         }
         return split("(").first()
-            .replace(Regex("[^a-zA-Z0-9_\\s]"), "")
+            .let { NON_IDENT_KEEP_SPACE.replace(it, "") }
             .trim()
-            .split(Regex("\\s+"))
+            .split(WHITESPACE)
             .lastOrNull() ?: this
+    }
+
+    companion object {
+        private val NON_IDENT = Regex("[^a-zA-Z0-9_]")
+        private val NON_IDENT_KEEP_SPACE = Regex("[^a-zA-Z0-9_\\s]")
+        private val WHITESPACE = Regex("\\s+")
     }
 }

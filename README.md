@@ -5,8 +5,8 @@
 [![Rating](https://img.shields.io/jetbrains/plugin/r/rating/33267-flutterhelper.svg)](https://plugins.jetbrains.com/plugin/33267-flutterhelper)
 [![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
 
-**Version 1.0.2** — compatibility fix.  
-**版本 1.0.2** — 兼容性修复。
+**Version 1.0.6** — perf logging.  
+**版本 1.0.6** — 性能日志。
 
 Flutter/Dart editor enhancements for **IntelliJ IDEA / Android Studio**.  
 面向 **IntelliJ IDEA / Android Studio** 的 Flutter/Dart 编辑增强插件。
@@ -24,6 +24,21 @@ Flutter/Dart editor enhancements for **IntelliJ IDEA / Android Studio**.
 Adapted from [Flutter Enhancement Suite](https://github.com/marius-h/flutter_enhancement_suite) (Marius Höfler, GPL-3.0).  
 改编自 [Flutter Enhancement Suite](https://github.com/marius-h/flutter_enhancement_suite)（Marius Höfler，GPL-3.0）。  
 Thanks / 致谢: Marius Höfler & Flutter Enhancement Suite.
+
+---
+
+## Perf diagnosis / 性能排查
+
+完整步骤与日志含义见：**[docs/PERF_DIAGNOSIS.md](docs/PERF_DIAGNOSIS.md)**
+
+**Quick / 速查:**
+
+1. **Help → Diagnostic Tools → Debug Log Settings** → add  
+   `#com.sixsix.flutter.helper.perf.FlutterHelperPerfLog`
+2. Reproduce lag → **Help → Show Log in Finder** → search `FlutterHelperPerf` in `idea.log`
+3. Watch `SLOW` (≥200ms) and counters (`gateBusy`, `hovers`, `cvCompute`, …)
+
+若卡顿时几乎没有 `FlutterHelperPerf`，更可能是 Dart Analysis Server / 工程警告，而不是本插件。
 
 ---
 

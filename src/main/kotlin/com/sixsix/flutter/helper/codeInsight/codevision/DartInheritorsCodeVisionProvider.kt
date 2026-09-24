@@ -24,13 +24,12 @@ import java.awt.event.MouseEvent
 
 /**
  * Code Vision hint showing implementation counts for abstract Dart types / members.
- * Dart 抽象类 / 抽象成员的实现数 Code Vision（如 `2 implementations`）。
+ * Dart 抽象类 / 抽象成员的实现数 Code Vision。
  *
- * Uses Analysis Server type hierarchy; click opens an implementation list.
- * 借助 Analysis Server 的类型层级查询，点击可弹出实现列表导航。
+ * Cached + gated with [DartCodeVisionGate] (shared with usages provider).
+ * 与引用 Code Vision 共用闸门，避免并行打爆 Analysis Server。
  *
  * Adapted from Flutter Enhancement Suite (GPL-3.0).
- * 改编自 Flutter Enhancement Suite（GPL-3.0）。
  */
 class DartInheritorsCodeVisionProvider : InheritorsCodeVisionProvider() {
     companion object {
@@ -51,6 +50,32 @@ class DartInheritorsCodeVisionProvider : InheritorsCodeVisionProvider() {
 
     override fun getHint(element: PsiElement, file: PsiFile): String? {
         if (element !is DartComponent) return null
+        if (com.intellij.ide.PowerSaveMode.isEnabled() ||
+            com.intellij.openapi.project.DumbService.isDumb(element.project)
+        ) {
+            return null
+        }
+        val cache = DartCodeVisionHintCache.getInstance(element.project)
+        when (val hit = cache.getIfPresent("inh", element)) {
+            is DartCodeVisionHintCache.EntryLookup.Present -> {
+                com.sixsix.flutter.helper.perf.FlutterHelperPerfLog.codeVisionCacheHit("inh")
+                return hit.hint
+            }
+            DartCodeVisionHintCache.EntryLookup.Absent -> Unit
+        }
+        return DartCodeVisionGate.tryRun {
+            val start = System.nanoTime()
+            val hint = computeHint(element, file)
+            com.sixsix.flutter.helper.perf.FlutterHelperPerfLog.codeVisionComputed(
+                "inh",
+                (System.nanoTime() - start) / 1_000_000L,
+            )
+            cache.put("inh", element, hint)
+            hint
+        }
+    }
+
+    private fun computeHint(element: DartComponent, file: PsiFile): String? {
         val anchor = element.componentName ?: return null
         val project = element.project
         val das = DartAnalysisServerService.getInstance(project)
